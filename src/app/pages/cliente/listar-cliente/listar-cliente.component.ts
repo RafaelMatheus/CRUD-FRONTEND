@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { PageCliente, clienteEntity } from 'src/app/entity/cliente.entity';
 import { ClienteService } from 'src/app/service/domain/cliente.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-listar-cliente',
@@ -11,13 +12,37 @@ export class ListarClienteComponent implements OnInit {
   public loader: boolean = false;
   public error: boolean  = true;
   private clientes: clienteEntity[];
-  constructor(private clienteService: ClienteService) { }
+  public modalRef: BsModalRef;
+  clienteNew: clienteEntity = <clienteEntity>{};
+  clienteUpdate: clienteEntity = <clienteEntity>{};
+  constructor(private clienteService: ClienteService, private modalService: BsModalService) { }
+
 
   ngOnInit() {
     this.findAll();
   }
 
-  findAll(page: string = '0',  linesporPage: string = '14', orderBy: string = 'DESC'){
+  selecionaCliente(cliente: clienteEntity){
+    this.clienteUpdate = cliente;
+  }
+
+  zeraCliente(){
+    this.clienteUpdate = <clienteEntity>{};
+  }
+
+  addCliente(cliente: clienteEntity){
+    alert('salvar');
+  }
+
+  updateCliente(cliente: clienteEntity){
+    alert('atualizar');
+  }
+
+  public openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template); // {3}
+  }
+
+  findAll(page: string = '0',  linesporPage: string = '9', orderBy: string = 'DESC'){
     this.clienteService.findAll(page, linesporPage, orderBy ).subscribe(
       (response: PageCliente) => {
        this.loader = true;
@@ -29,13 +54,13 @@ export class ListarClienteComponent implements OnInit {
     })
   }
 
-  trocarOrder(order: string) {
-    
-    this.findAll('0', '14', 'nome');
+  trocarOrdem(order: string) {
+    console.log(order)
+    this.findAll('0', '14', order);
   }
 
   delete(matricula: string){
-    
+
   }
 
 }
