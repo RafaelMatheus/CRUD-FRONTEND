@@ -1,0 +1,12 @@
+.page-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    background-color: #15212a;
+    color: #fff;
+}
+
+.page-footer{
+    font-size: 14px;
+}
