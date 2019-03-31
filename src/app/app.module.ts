@@ -12,6 +12,9 @@ import { ClienteService } from './service/domain/cliente.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CadastrarClienteComponent } from './pages/cliente/cadastrar-cliente/cadastrar-cliente.component';
 import { FormClienteComponent } from './pages/cliente/form-cliente/form-cliente.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { FormClienteComponent } from './pages/cliente/form-cliente/form-cliente.
     HttpClientModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [ClienteService],
   bootstrap: [AppComponent]

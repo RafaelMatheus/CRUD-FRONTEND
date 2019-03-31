@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { PageCliente, clienteEntity } from 'src/app/entity/cliente.entity';
 import { ClienteService } from 'src/app/service/domain/cliente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-listar-cliente',
@@ -15,7 +16,9 @@ export class ListarClienteComponent implements OnInit {
   public modalRef: BsModalRef;
   clienteNew: clienteEntity = <clienteEntity>{};
   clienteUpdate: clienteEntity = <clienteEntity>{};
-  constructor(private clienteService: ClienteService, private modalService: BsModalService) { }
+  constructor(private clienteService: ClienteService, 
+    private modalService: BsModalService, 
+    private toastr: ToastrService) { }
 
 
   ngOnInit() {
@@ -31,11 +34,18 @@ export class ListarClienteComponent implements OnInit {
   }
 
   addCliente(cliente: clienteEntity){
-    alert('salvar');
+    console.log(cliente);
+    this.clienteService.insert(cliente).subscribe(response => {
+      alert("Cadastro efetuado com sucesso!");
+    }, error=>{
+      alert("Não foi possivel cadastrar o cliente entre em contato com o suporte.");
+    })
+   
   }
 
   updateCliente(cliente: clienteEntity){
-    alert('atualizar');
+    console.log(cliente)
+    alert(cliente);
   }
 
   public openModal(template: TemplateRef<any>) {
@@ -59,8 +69,14 @@ export class ListarClienteComponent implements OnInit {
     this.findAll('0', '14', order);
   }
 
-  delete(matricula: string){
-
+  deleteCliente(matricula: string){
+    this.clienteService.delete(matricula).subscribe(response=>{
+      alert('cliente removido com sucesso! ');
+      this.findAll();
+      this.modalRef.hide();
+    },error=>{
+      alert('erro ao remover cliente entre em contato com o suporte. ');
+    })
   }
 
 }

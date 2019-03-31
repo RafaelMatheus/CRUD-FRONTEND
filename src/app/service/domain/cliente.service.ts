@@ -8,11 +8,20 @@ import { API_CONFIG } from 'src/app/config/apiConfig';
     providedIn: 'root'
 })
 export class ClienteService{
+    private urlApi: string = API_CONFIG.baseUrlLocal;
     constructor(private http: HttpClient){}
 
-    findAll(page: string = '', linesPerPage: string = '14' , orderBy: string = 'nome' , order: string = 'DESC'): Observable<PageCliente>{
+    findAll(page: string = '', linesPerPage: string = '14' , orderBy: string = 'data_cadast' , order: string = 'DESC'): Observable<PageCliente>{
         return this.http.get<PageCliente>(
-            `${API_CONFIG.baseUrlLocal}/clientes?page=${page}&linesPerPage=${linesPerPage}&orderby=${orderBy}&direction=${order}`);
+            `${this.urlApi}/clientes?page=${page}&linesPerPage=${linesPerPage}&orderby=${orderBy}&direction=${order}`);
+    }
+
+    insert(cliente: clienteEntity): Observable<any>{
+        return this.http.post(`${this.urlApi}/clientes`, cliente)
+    }
+
+    delete(matricula: string): Observable<any>{
+        return this.http.delete(`${this.urlApi}/clientes/${matricula}`);
     }
 
 }
