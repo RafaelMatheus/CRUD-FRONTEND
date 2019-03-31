@@ -3,18 +3,23 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListarClienteComponent } from './pages/listar-cliente/listar-cliente.component';
+import { ListarClienteComponent } from './pages/cliente/listar-cliente/listar-cliente.component';
+import { ClienteService } from './service/domain/cliente.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CadastrarClienteComponent } from './pages/cliente/cadastrar-cliente/cadastrar-cliente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListarClienteComponent
+    ListarClienteComponent,
+    CadastrarClienteComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ClienteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
