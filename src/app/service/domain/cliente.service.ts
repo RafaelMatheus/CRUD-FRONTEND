@@ -12,7 +12,7 @@ export class ClienteService{
 
     findAll(page: string = '', linesPerPage: string = '14' , orderBy: string = 'nome' , order: string = 'DESC'): Observable<PageCliente>{
         return this.http.get<PageCliente>(
-            `${API_CONFIG.baseUrl}/clientes?page=${page}&linesPerPage=${linesPerPage}&orderby=${orderBy}&direction=${order}`);
+            `${API_CONFIG.baseUrlLocal}/clientes?page=${page}&linesPerPage=${linesPerPage}&orderby=${orderBy}&direction=${order}`);
     }
 
 }

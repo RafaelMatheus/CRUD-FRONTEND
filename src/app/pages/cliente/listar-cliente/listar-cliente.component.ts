@@ -34,4 +34,8 @@ export class ListarClienteComponent implements OnInit {
     this.findAll('0', '14', 'nome');
   }
 
+  delete(matricula: string){
+    
+  }
+
 }
