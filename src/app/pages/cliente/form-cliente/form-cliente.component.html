@@ -1,0 +1,25 @@
+<form (ngSubmit)="onSubmit();$event.preventDefault()">
+  <div>
+    <label for="nome">Nome</label>
+    <input type="text" [(ngModel)]="cliente.nome" id="nome" name="nome" class="form-control">
+  </div>
+
+  <div>
+      <label for="email">Email</label>
+      <input type="text" [(ngModel)]="cliente.email" id="email" name="email" class="form-control">
+  </div>
+
+  <div>
+      <label for="nascimento">Nascimento</label>
+      <input type="text" [(ngModel)]="cliente.dataNascimento" id="nascimento" name="nascimento" class="form-control">
+  </div>
+
+  <div *ngIf="!cliente.matricula">
+      <label for="password">Senha</label>
+      <input type="password" [(ngModel)]="cliente.senha" id="password" name="password" class="form-control">
+  </div>
+
+  <button type="submit"  class="mt-2 mr-2 btn btn-success"><i class="mr-1 fas fa-save"></i>{{btn}}</button>
+  <button type="button" (click)="fecharModal()" class="mt-2 btn btn-danger"><i class="mr-1 fas fa-arrow-left"></i>Cancelar</button>
+
+</form>

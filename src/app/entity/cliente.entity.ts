@@ -1,10 +1,11 @@
 
 
 export interface clienteEntity{
-    matricula: string,
-    nome: string,
-    dataNascimento: Date,
-    email: string
+    matricula: string;
+    nome: string;
+    dataNascimento: Date;
+    email: string;
+    senha?: string;
 }
 
 export interface PageCliente {

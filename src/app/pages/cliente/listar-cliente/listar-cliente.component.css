@@ -8,3 +8,53 @@
     margin-bottom: 3px;
 }
 
+.btn-adicionar{
+    border-radius: 300px;
+    width: 60px;
+    height: 60px;
+    margin:20px;
+    font-size: 15px;
+    text-align: center;
+
+}
+
+.box-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.badge{
+    font-size: 15px;
+}
+
+.number{
+    font-size: 15px;
+    cursor: pointer;
+    padding: 2px 10px;
+    border: 1px solid black;
+}
+
+.atual{
+    background-color: #007bff;   
+    color: white;
+}
+
+.fas.fa-angle-double-right, .fas.fa-angle-double-left, .fas.fa-angle-left, .fas.fa-angle-right{
+    font-size: 15px;
+    cursor:pointer;
+    padding: 5px 10px;
+    border: 1px solid black;
+}
+
+.add{
+    margin-right: 100px;
+}
+
+th:hover{
+    cursor: pointer;
+    background-color:#ccc;
+}
+
+.mr{
+    margin-right: 10px;
+}
