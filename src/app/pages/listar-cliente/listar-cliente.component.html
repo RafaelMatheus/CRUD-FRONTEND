@@ -1,11 +1,12 @@
 <html ng-app="guerraTI">
     <head>
-        <title>Angular JS - Paginação</title>
+        <title>Clientes</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     </head>
     <body>
+
         <div class="container">
             <div class="col-md-12">
                 <table class="table" ng-controller="listarDados">
@@ -18,7 +19,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- AQUI VIRÁ SUA TABELA -->
+                        <tr *ngFor="let cliente of clientes">
+                          <td>{{cliente.matricula}}</td>
+                          <td>{{cliente.nome}}</td>
+                          <td>{{cliente.email}}</td>
+                          <td>{{cliente.dataNascimento}}</td>
+                          <td>
+                            <button type="button" class="btn btn-success btn-sm">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button></td>
+                          <td>
+                            <button type="button" class="btn btn-success btn-sm">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
