@@ -4,7 +4,7 @@
                 <form class="form-inline filter">
                     <div class="form-group">
                         <label> Procurar </label>
-                        <input type="text" ng-model="procurar" class="form-control input-filter" placeholder="Procurar...">
+                        <input (keyup.enter)="onKey($event)" type="text" ng-model="procurar" class="form-control input-filter" placeholder="Procurar...">
                     </div>
                 </form>
                 <div class="table-responsive">
