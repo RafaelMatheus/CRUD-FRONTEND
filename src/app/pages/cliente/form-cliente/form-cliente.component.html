@@ -11,7 +11,7 @@
 
   <div>
       <label for="nascimento">Nascimento</label>
-      <input type="text" [(ngModel)]="cliente.dataNascimento" id="nascimento" name="nascimento" class="form-control">
+      <input type="date" [(ngModel)]="cliente.dataNascimento" id="nascimento" name="nascimento" class="form-control">
   </div>
 
   <div *ngIf="!cliente.matricula">

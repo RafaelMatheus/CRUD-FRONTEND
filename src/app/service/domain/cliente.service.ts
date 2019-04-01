@@ -24,4 +24,8 @@ export class ClienteService{
         return this.http.delete(`${this.urlApi}/clientes/${matricula}`);
     }
 
+    update(cliente: clienteEntity): Observable<any>{
+        return this.http.put(`${this.urlApi}/clientes/${cliente.matricula}`, cliente);
+    }
+
 }

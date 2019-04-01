@@ -24,7 +24,7 @@
                             <td>{{cliente.matricula}}</td>
                             <td>{{cliente.nome}}</td>
                             <td>{{cliente.email}}</td>
-                            <td>{{cliente.dataNascimento}}</td>
+                            <td>{{cliente.dataNascimento | date: 'dd/MM/yyyy'}}</td>
                             <td>
                                 <button (click)="openModal(edicao)" (click)="selecionaCliente(cliente)" type="button" class="btn btn-primary btn-sm">
                                     <i class="fas fa-pencil-alt"></i>
@@ -38,8 +38,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
         </div>
         <div class="box-button">
             <button class="btn btn-primary btn-adicionar " type="button" (click)="openModal(cadastro)" ><i class="fas fa-plus"></i></button>

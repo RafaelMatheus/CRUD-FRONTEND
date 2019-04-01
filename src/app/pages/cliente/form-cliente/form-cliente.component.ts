@@ -24,6 +24,7 @@ export class FormClienteComponent implements OnInit {
 
   onSubmit() {
     this.outputCliente.emit(this.cliente);
+    console.log(this.cliente)
   }
 
 }
