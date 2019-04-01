@@ -4,7 +4,10 @@
                 <form class="form-inline filter">
                     <div class="form-group">
                         <label> Procurar <i class="fa fa-times-circle-o "></i></label>
-                        <input (keyup.enter)="onKey($event)" type="text" ng-model="procurar" class="form-control input-filter" placeholder="Procurar...">
+                        <form class="formulario"> 
+                            <input (keyup.enter)="onKey($event)" type="text" ng-model="procurar" class="form-control input-filter nome" placeholder="Procurar...">
+                            <input class="limpar" type="reset" value="X" (click)="findAll()"/>
+                        </form>
                     </div>
                 </form>
                 <div class="table-responsive">

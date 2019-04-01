@@ -61,3 +61,24 @@ th:hover{
 .info-text{
     justify-content: center;
 }
+
+.nome {
+    padding: 10px 25px 10px 10px;
+    border: 1px solid #ccc;
+}
+ 
+.limpar {
+   position: absolute;
+   right: 10px; top: 7px;
+   padding: 0;
+   cursor: pointer;
+   background: #fff;
+   color: gray;
+   border:none;
+}
+
+.formulario {
+    position: relative;
+    display: inline;
+ }
+  

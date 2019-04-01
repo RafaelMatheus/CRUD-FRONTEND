@@ -42,11 +42,13 @@ export class ListarClienteComponent implements OnInit {
     console.log(cliente);
     this.clienteService.insert(cliente).subscribe(response => {
       this.findAll();
-      alert(MENSAGENS.SUCESSO);
+      this.toastr.success(MENSAGENS.SUCESSO);
+      this.modalRef.hide();
     }, error=>{
       this.loader = false;
       this.error = true;
-      alert(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR);
+      this.modalRef.hide();
     })
    
   }
@@ -54,11 +56,13 @@ export class ListarClienteComponent implements OnInit {
   updateCliente(cliente: clienteEntity){
     this.clienteService.update(cliente).subscribe(response=>{
       this.findAll();
-      alert(MENSAGENS.SUCESSO);
+      this.toastr.success(MENSAGENS.SUCESSO);
+      this.modalRef.hide();
     }, error=>{
       this.loader = false;
       this.error = true;
-      alert(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR);
+      this.modalRef.hide();
     })
     
   }
@@ -74,7 +78,6 @@ export class ListarClienteComponent implements OnInit {
        this.loader = true;
        this.clientes = response.content;
        this.isUser = true;
-      console.log(this.clientes);
     }, error=> {
        this.loader = false;
        this.error = true;
@@ -93,13 +96,14 @@ export class ListarClienteComponent implements OnInit {
 
   deleteCliente(matricula: string){
     this.clienteService.delete(matricula).subscribe(response=>{
-      alert(MENSAGENS.SUCESSO);
+      this.toastr.success(MENSAGENS.SUCESSO);
       this.findAll();
       this.modalRef.hide();
     },error=>{
       this.loader = false;
       this.error = true;
-      alert(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR);
+      this.modalRef.hide();
     })
   }
 
