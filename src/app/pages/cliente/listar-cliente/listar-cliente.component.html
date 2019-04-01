@@ -1,91 +1,112 @@
-
-        <div class="container">
-            <div class="col-md-12">
-                <form class="form-inline filter">
-                    <div class="form-group">
-                        <label> Procurar <i class="fa fa-times-circle-o "></i></label>
-                        <form class="formulario"> 
-                            <input (keyup.enter)="onKey($event)" type="text" ng-model="procurar" class="form-control input-filter nome" placeholder="Procurar...">
-                            <input class="limpar" type="reset" value="X" (click)="findAll()"/>
-                        </form>
-                    </div>
-                </form>
-                <div class="table-responsive">
-                    <table class="table" ng-controller="listarDados">
-                        <thead>
-                            <tr>
-                                <th (click)="trocarOrdem('matricula')">Matricula</th>
-                                <th (click)="trocarOrdem('nome')">Nome</th>
-                                <th (click)="trocarOrdem('email')">E-mail</th>
-                                <th (click)="trocarOrdem('dataNascimento')">Nasc.</th>
-                                <th>Editar</th>
-                                <th>Deletar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let cliente of clientes">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-11">
+            <div class="row justify-content-end">
+                <div class="col-md-4 sm-12 ">
+                    <form class="needs-validation">
+                        <div class="input-group mb-3">
+                            <input (keyup.enter)="onKey($event)" type="text" class="form-control" ng-model="procurar"
+                                placeholder="Procurar" aria-label="Recipient's username"
+                                aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="reset" id="button-addon2"
+                                    (click)="findAll()"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10 ms-12">
+            <div class="table-responsive table table-hover">
+                <table class="table" ng-controller="listarDados">
+                    <thead>
+                        <tr>
+                            <th (click)="trocarOrdem('matricula')">Matricula</th>
+                            <th (click)="trocarOrdem('nome')">Nome</th>
+                            <th (click)="trocarOrdem('email')">E-mail</th>
+                            <th (click)="trocarOrdem('dataNascimento')">Nasc.</th>
+                            <th>Editar</th>
+                            <th>Deletar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cliente of clientes">
                             <td>{{cliente.matricula}}</td>
                             <td>{{cliente.nome}}</td>
                             <td>{{cliente.email}}</td>
                             <td>{{cliente.dataNascimento | date: 'dd/MM/yyyy'}}</td>
                             <td>
-                                <button (click)="openModal(edicao)" (click)="selecionaCliente(cliente)" type="button" class="btn btn-primary btn-sm">
+                                <button (click)="openModal(edicao)" (click)="selecionaCliente(cliente)" type="button"
+                                    class="btn btn-primary btn-sm">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
                             </td>
                             <td>
-                                <button  (click)="openModal(delete)" (click)="selecionaCliente(cliente)" type="button" class="btn btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDialog">
-                                        <i class="far fa-trash-alt"></i>
+                                <button (click)="openModal(delete)" (click)="selecionaCliente(cliente)" type="button"
+                                    class="btn btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDialog">
+                                    <i class="far fa-trash-alt"></i>
                                 </button>
                             </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row ">
+                    <div class="col-md-12 col-sm-3 fixed-bottom ">
+                        <button class="btn btn-primary btn-adicionar float-right " type="button"
+                            (click)="openModal(cadastro)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="box-button">
-            <button class="btn btn-primary btn-adicionar " type="button" (click)="openModal(cadastro)" ><i class="fas fa-plus"></i></button>
-        </div>
+    </div>
+</div>
+
+
+
 
 
 <ng-template #cadastro>
-        <div class="modal-header">
-            <h4 class="modal-title pull-left">Cadastro Cliente</h4>
-            <button type="button" class="close pull-right" 
-                    aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Cadastro Cliente</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
         </button>
-        </div>
-        <div class="modal-body">
-            <app-form-cliente btn="Salvar" [cliente]="clienteNew" (outputCliente)="addCliente($event)" (outputModal)="modalRef.hide()"></app-form-cliente>
-            
-        </div>
+    </div>
+    <div class="modal-body">
+        <app-form-cliente btn="Salvar" [cliente]="clienteNew" (outputCliente)="addCliente($event)"
+            (outputModal)="modalRef.hide()"></app-form-cliente>
+
+    </div>
 </ng-template>
 
 <ng-template #edicao>
-        <div class="modal-header">
-            <h4 class="modal-title pull-left">Atualizar Cliente</h4>
-            <button type="button" class="close pull-right" 
-                    aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Atualizar Cliente</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
         </button>
-        </div>
-        <div class="modal-body">
-            <app-form-cliente btn="Atualizar" (outputCliente)="updateCliente($event)" [cliente]="clienteUpdate" (outputModal)="modalRef.hide()"></app-form-cliente>
-            
-        </div>
+    </div>
+    <div class="modal-body">
+        <app-form-cliente btn="Atualizar" (outputCliente)="updateCliente($event)" [cliente]="clienteUpdate"
+            (outputModal)="modalRef.hide()"></app-form-cliente>
+
+    </div>
 </ng-template>
 
 <ng-template #delete>
-        <div class="modal-header">
-            <h4 class="modal-title pull-left">Deletar Cliente</h4>
-            <button type="button" class="close pull-right" 
-                    aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Deletar Cliente</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
         </button>
-        </div>
-        <div class="modal-body">
-            <h5>Tem certeza que deseja excluir o cliente {{clienteUpdate.nome + '?'}}</h5>
-            <button class="btn btn-success mr-2" (click)="deleteCliente(clienteUpdate.matricula)" ><i class="fas fa-check mr-1"></i>Confirmar</button>
-            <button class="btn btn-danger" (click)="modalRef.hide()"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
-        </div>
+    </div>
+    <div class="modal-body">
+        <h5>Tem certeza que deseja excluir o cliente {{clienteUpdate.nome + '?'}}</h5>
+        <button class="btn btn-success mr-2" (click)="deleteCliente(clienteUpdate.matricula)"><i
+                class="fas fa-check mr-1"></i>Confirmar</button>
+        <button class="btn btn-danger" (click)="modalRef.hide()"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+    </div>
 </ng-template>
