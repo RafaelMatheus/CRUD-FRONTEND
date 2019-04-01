@@ -17,6 +17,7 @@ export class ListarClienteComponent implements OnInit {
   public isUser: boolean = false;
   private clientes: clienteEntity[];
   public modalRef: BsModalRef;
+  public order: string;
   public value: any;
   clienteNew: clienteEntity = <clienteEntity>{};
   clienteUpdate: clienteEntity = <clienteEntity>{};
@@ -66,8 +67,9 @@ export class ListarClienteComponent implements OnInit {
     this.modalRef = this.modalService.show(template); 
   }
 
-  findAll(page: string = '0',  linesporPage: string = '9', orderBy: string = 'DESC'){
-    this.clienteService.findAll(page, linesporPage, orderBy ).subscribe(
+  findAll(page: string = '0',  linesporPage: string = '9', orderBy: string = 'data_cadast', order: string = "DESC"){
+    this.order = order;
+    this.clienteService.findAll(page, linesporPage, orderBy, order ).subscribe(
       (response: PageCliente) => {
        this.loader = true;
        this.clientes = response.content;
@@ -79,9 +81,14 @@ export class ListarClienteComponent implements OnInit {
     })
   }
 
-  trocarOrdem(order: string) {
-    console.log(order)
-    this.findAll('0', '14', order);
+  trocarOrdem(orderBy: string) {
+    if(this.order == 'ASC'){
+      this.order = 'DESC';
+    }
+    else{
+      this.order = 'ASC';
+    }
+    this.findAll('0', '14', orderBy, this.order);
   }
 
   deleteCliente(matricula: string){
@@ -109,7 +116,6 @@ export class ListarClienteComponent implements OnInit {
     this.clienteService.search(page, linesporPage, orderBy, order, this.value).subscribe( 
       (response: PageCliente) =>{
       this.clientes = response.content
-      console.log(response.content);
     }, error=>{
       console.log(error.message)
     })
