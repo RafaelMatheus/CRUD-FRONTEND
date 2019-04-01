@@ -58,3 +58,6 @@ th:hover{
 .mr{
     margin-right: 10px;
 }
+.info-text{
+    justify-content: center;
+}

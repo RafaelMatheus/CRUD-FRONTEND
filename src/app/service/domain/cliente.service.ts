@@ -24,4 +24,14 @@ export class ClienteService{
         return this.http.delete(`${this.urlApi}/clientes/${matricula}`);
     }
 
+    update(cliente: clienteEntity): Observable<any>{
+        return this.http.put(`${this.urlApi}/clientes/${cliente.matricula}`, cliente);
+    }
+
+    search(page: string = '', linesPerPage: string = '14' , orderBy: string = 'data_cadast' , order: string = 'DESC', nome: string = ''): Observable<PageCliente>{
+        console.log(nome)
+        return this.http.get<PageCliente>(
+            `${this.urlApi}/clientes/search?page=${page}&linesPerPage=${linesPerPage}&orderby=${orderBy}&direction=${order}&nome=${nome}`);
+    }
+
 }
