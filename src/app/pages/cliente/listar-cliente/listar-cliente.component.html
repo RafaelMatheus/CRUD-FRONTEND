@@ -59,10 +59,14 @@
                             (click)="openModal(cadastro)"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
+                <pagination [totalItems]="response?.totalPages" [(ngModel)]="teste" ></pagination>
+                <div>
+                </div>
             </div>
         </div>
-    </div>
+    </div>  
 </div>
+
 
 
 

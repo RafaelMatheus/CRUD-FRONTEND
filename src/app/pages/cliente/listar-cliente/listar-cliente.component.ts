@@ -4,6 +4,7 @@ import { ClienteService } from 'src/app/service/domain/cliente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { MENSAGENS } from 'src/app/config/message';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ListarClienteComponent implements OnInit {
   public value: any;
   clienteNew: clienteEntity = <clienteEntity>{};
   clienteUpdate: clienteEntity = <clienteEntity>{};
+  public response: PageCliente;
   constructor(private clienteService: ClienteService, 
     private modalService: BsModalService, 
     private toastr: ToastrService) { }
@@ -68,6 +70,11 @@ export class ListarClienteComponent implements OnInit {
   }
 
   public openModal(template: TemplateRef<any>) {
+    this.clienteNew.email='';
+    this.clienteNew.dataNascimento=null;
+    this.clienteNew.nome='';
+    this.clienteNew.senha='';
+    this.clienteNew.matricula='';
     this.modalRef = this.modalService.show(template); 
   }
 
@@ -78,6 +85,8 @@ export class ListarClienteComponent implements OnInit {
        this.loader = true;
        this.clientes = response.content;
        this.isUser = true;
+       this.response = response;
+       console.log(response)
     }, error=> {
        this.loader = false;
        this.error = true;
@@ -124,4 +133,15 @@ export class ListarClienteComponent implements OnInit {
       console.log(error.message)
     })
   }
+
+  totalItensPage(): any{
+    console.log(this.response.totalPages);
+
+    return this.response.totalPages;
+  }
+
+  onChangePage(event:any): void{
+    console.log(event)  
+  }
+
 }

@@ -1,8 +1,9 @@
-<form (ngSubmit)="onSubmit();$event.preventDefault()">
+<form #formCliente (ngSubmit)="onSubmit();$event.preventDefault()">
   <div>
     <label for="nome">Nome</label>
-    <input type="text" [(ngModel)]="cliente.nome" id="nome" name="nome" class="form-control">
+    <input type="text" [ngClass]="nome.invalid ? 'invalid-feedback':''" required #nome [(ngModel)]="cliente.nome" id="nome" name="nome" class="form-control">
   </div>
+  <div *ngIf="nome.touched && !nome.valid">hsfdh</div>
 
   <div>
       <label for="email">Email</label>
@@ -14,12 +15,12 @@
       <input type="date" [(ngModel)]="cliente.dataNascimento" id="nascimento" name="nascimento" class="form-control">
   </div>
 
-  <div *ngIf="!cliente.matricula">
+  <div >
       <label for="password">Senha</label>
       <input type="password" [(ngModel)]="cliente.senha" id="password" name="password" class="form-control">
   </div>
 
-  <button type="submit"  class="mt-2 mr-2 btn btn-success"><i class="mr-1 fas fa-save"></i>{{btn}}</button>
+  <button type="submit" [disabled]='!formCliente.valid'  class="mt-2 mr-2 btn btn-success"><i class="mr-1 fas fa-save"></i>{{btn}}</button>
   <button type="button" (click)="fecharModal()" class="mt-2 btn btn-danger"><i class="mr-1 fas fa-arrow-left"></i>Cancelar</button>
 
 </form>
