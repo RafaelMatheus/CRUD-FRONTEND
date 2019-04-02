@@ -10,7 +10,7 @@
 
   <div>
     <label for="email">Email</label>
-    <input type="text" #email="ngModel" [class.is-invalid]="!email.valid && email.touched" required email
+    <input type="text" #email="ngModel" [class.is-invalid]="!email.valid && email.touched" required email maxlength="50"
       [(ngModel)]="cliente.email" id="email" name="email" class="form-control">
   </div>
   <div *ngIf="!email.valid && email.touched" class="text-danger">
@@ -33,7 +33,7 @@
       type="password" [(ngModel)]="cliente.senha" id="password" name="password" class="form-control">
 
     <div *ngIf="!pass.valid && pass.touched" class="text-danger">
-      Informe uma senha com no
+      Informe uma senha com no minimo 6 caracteres.
     </div>
   </div>
 

@@ -3,8 +3,8 @@ import { PageCliente, clienteEntity } from 'src/app/entity/cliente.entity';
 import { ClienteService } from 'src/app/service/domain/cliente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-import { MENSAGENS } from 'src/app/config/message';
-import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { MENSAGENS } from 'src/app/config/message'; 
+
 
 
 @Component({
@@ -22,7 +22,8 @@ export class ListarClienteComponent implements OnInit {
   public value: any;
   clienteNew: clienteEntity = <clienteEntity>{};
   clienteUpdate: clienteEntity = <clienteEntity>{};
-  public response: PageCliente;
+  pageNumber = 20;
+  public pageClientes: PageCliente;
   constructor(private clienteService: ClienteService, 
     private modalService: BsModalService, 
     private toastr: ToastrService) { }
@@ -41,7 +42,6 @@ export class ListarClienteComponent implements OnInit {
   }
 
   addCliente(cliente: clienteEntity){
-    console.log(cliente);
     this.clienteService.insert(cliente).subscribe(response => {
       this.findAll();
       this.toastr.success(MENSAGENS.SUCESSO);
@@ -78,15 +78,14 @@ export class ListarClienteComponent implements OnInit {
     this.modalRef = this.modalService.show(template); 
   }
 
-  findAll(page: string = '0',  linesporPage: string = '9', orderBy: string = 'data_cadast', order: string = "DESC"){
+  findAll(page: string = '0',  linesporPage: string = '10', orderBy: string = 'data_cadast', order: string = "DESC"){
+    this.loader = true;
     this.order = order;
     this.clienteService.findAll(page, linesporPage, orderBy, order ).subscribe(
       (response: PageCliente) => {
-       this.loader = true;
        this.clientes = response.content;
        this.isUser = true;
-       this.response = response;
-       console.log(response)
+       this.pageClientes = response;
     }, error=> {
        this.loader = false;
        this.error = true;
@@ -133,15 +132,10 @@ export class ListarClienteComponent implements OnInit {
       console.log(error.message)
     })
   }
-
-  totalItensPage(): any{
-    console.log(this.response.totalPages);
-
-    return this.response.totalPages;
+  pageChanged(event: any){
+    this. pageNumber = this.pageClientes.pageable.pageNumber;
+    console.log(this.pageClientes.number);
+    console.log(this.pageClientes.pageable.pageNumber);
+    this.findAll(event.page);
   }
-
-  onChangePage(event:any): void{
-    console.log(event)  
-  }
-
 }
