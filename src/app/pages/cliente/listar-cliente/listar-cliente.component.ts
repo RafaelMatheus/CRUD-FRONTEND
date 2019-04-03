@@ -18,6 +18,7 @@ export class ListarClienteComponent implements OnInit {
   private error: boolean  = true;
   public isUser: boolean = false;
   public isShow: boolean = true;
+  public isRegistro: boolean = true;
   public clientes: clienteEntity[];
   public modalRef: BsModalRef;
   public order: string;
@@ -95,6 +96,8 @@ export class ListarClienteComponent implements OnInit {
     this.modalRef = this.modalService.show(template); 
   }
 
+
+
   findAll(page: string = '0',  linesporPage: string = '10', orderBy: string = 'data_cadast', order: string = "DESC"){
     this.loader = true;
     this.order = order;
@@ -141,8 +144,9 @@ export class ListarClienteComponent implements OnInit {
   onKey(event: any, page: string = '0',  linesporPage: string = '9', orderBy: string = 'data_cadast', order='DESC') { // without type info
     this.value = event.target.value;
     this.isShow = false;
-    if(this.value == null){
+    if(this.value === ''){
       this.findAll();
+      console.log(this.isShow)
     }
     this.clienteService.search(page, linesporPage, orderBy, order, this.value).subscribe( 
       (response: PageCliente) =>{
