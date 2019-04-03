@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { PageCliente, clienteEntity, UpdateSenha } from 'src/app/entity/cliente.entity';
+import { PageCliente, clienteEntity } from 'src/app/entity/cliente.entity';
 import { ClienteService } from 'src/app/service/domain/cliente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { MENSAGENS } from 'src/app/config/message'; 
+import { UpdateSenha } from 'src/app/entity/UpdateSenha.dto';
 
 
 
@@ -31,11 +32,13 @@ export class ListarClienteComponent implements OnInit {
 
   ngOnInit() {
     this.findAll();
-    console.log(this.pageClientes);
   }
 
   selecionaCliente(cliente: clienteEntity){
     this.clienteUpdate = cliente;
+  }
+  selecionarClienteUpdateSenha(matricula: number){
+    this.updateSenha.matricula = matricula;
   }
 
   zeraCliente(){
@@ -70,6 +73,17 @@ export class ListarClienteComponent implements OnInit {
     
   }
 
+  public changePassword(updateSenha: UpdateSenha){
+    console.log(updateSenha)
+    this.clienteService.changePassword(updateSenha).subscribe( response=> {
+      this.toastr.success(MENSAGENS.SUCESSO);
+      this.modalRef.hide();
+    },error=>{
+      this.toastr.error(MENSAGENS.ERROR);
+      this.modalRef.hide();
+      console.log(error.message)
+    })
+  }
   public openModal(template: TemplateRef<any>) {
     this.clienteNew.email='';
     this.clienteNew.dataNascimento=null;

@@ -42,9 +42,3 @@ export interface Sort {
     unsorted: boolean;
 }
 
-export interface UpdateSenha{
-    matricula: number;
-    senhaAtual: string;
-    senhaNova: string;
-    confirmsenha: string;
-}   

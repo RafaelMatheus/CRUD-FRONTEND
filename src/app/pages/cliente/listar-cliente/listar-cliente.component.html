@@ -54,7 +54,7 @@
                                 </button>
                             </td>
                             <td>
-                                <button (click)="openModal(updateSenha)" (click)="selecionaCliente(cliente)"
+                                <button (click)="openModal(updateSenha)" (click)="selecionarClienteUpdateSenha(cliente.matricula)"
                                     type="button" class="btn btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#confirmDialog">
                                     <i class="far fa-trash-alt"></i>
@@ -143,13 +143,13 @@
         </div>
 
         <div class="modal-body">
-            <form #senhaForm="ngForm" (ngSubmit)="onSubmit();$event.preventDefault()">
+            <form #senhaForm="ngForm" (ngSubmit)="changePassword(updateSenha);$event.preventDefault()">
                 <div>
                     <div>
                         <label for="senhaAtual">Senha Atual </label>
                         <input #senhaAtual="ngModel" type="password" name="senhaAtual" id="senhaAtual"
                             [(ngModel)]="updateSenha.senhaAtual"
-                            [class.is-invalid]="!senhaAtual.valid && senhaAtual.touched" required class="form-control">
+                            [class.is-invalid]="!senhaAtual.valid && senhaAtual.touched" required maxlength="50" class="form-control">
                     </div>
 
                     <div *ngIf="!senhaAtual.valid && senhaAtual.touched" class="text-danger">
@@ -159,8 +159,8 @@
                     <div>
                         <label for="senhaNova">Nova senha </label>
                         <input name="senhaNova" id="senhaNova" [(ngModel)]="updateSenha.senhaNova" #senhaNova="ngModel"
-                            [class.is-invalid]="!senhaNova.valid && senhaNova.touched" required type="password"
-                            class="form-control">
+                            [class.is-invalid]="!senhaNova.valid && senhaNova.touched" required minlength="6"
+                            maxlength="50" type="password" class="form-control">
                     </div>
 
                     <div *ngIf="!senhaNova.valid && senhaNova.touched" class="text-danger">
@@ -174,7 +174,7 @@
                         <label for="confirmsenha">Confirme a nova senha</label>
                         <input #confirmsenha="ngModel" type="password" name="confirmsenha" id="confirmsenha"
                             [(ngModel)]="updateSenha.confirmsenha"
-                            [class.is-invalid]="!confirmsenha.valid && confirmsenha.touched" required
+                            [class.is-invalid]="!confirmsenha.valid && confirmsenha.touched" required maxlength="50"
                             class="form-control">
                     </div>
                     <div *ngIf="!confirmsenha.valid && confirmsenha.touched" class="text-danger">
@@ -187,7 +187,9 @@
                     </div>
 
                     <div class="mt-2">
-                        <button [disabled]="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) || senhaForm.invalid" class="btn btn-success mr-2" (click)="deleteCliente(clienteUpdate.matricula)"><i
+                        <button
+                            type="submit" [disabled]="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) || senhaForm.invalid"
+                            class="btn btn-success mr-2"><i
                                 class="fas fa-check mr-1"></i>Confirmar</button>
                         <button class="btn btn-danger" (click)="modalRef.hide()"><i
                                 class="fas fa-arrow-left mr-1"></i>Cancelar</button>
