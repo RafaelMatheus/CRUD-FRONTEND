@@ -14,8 +14,8 @@ import { UpdateSenha } from 'src/app/entity/UpdateSenha.dto';
   styleUrls: ['./listar-cliente.component.css']
 })
 export class ListarClienteComponent implements OnInit {
-  private loader: boolean = false;
-  private error: boolean  = true;
+  public loader: boolean = false;
+  public error: boolean  = true;
   public isUser: boolean = false;
   public isShow: boolean = true;
   public isRegistro: boolean = true;
