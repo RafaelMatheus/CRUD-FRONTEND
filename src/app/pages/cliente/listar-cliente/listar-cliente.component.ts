@@ -37,8 +37,9 @@ export class ListarClienteComponent implements OnInit {
   selecionaCliente(cliente: clienteEntity){
     this.clienteUpdate = cliente;
   }
-  selecionarClienteUpdateSenha(matricula: number){
-    this.updateSenha.matricula = matricula;
+  selecionarClienteUpdateSenha(matricula: clienteEntity){
+    console.log(matricula)
+    this.updateSenha.matricula = matricula.matricula;
   }
 
   zeraCliente(){
@@ -74,14 +75,14 @@ export class ListarClienteComponent implements OnInit {
   }
 
   public changePassword(updateSenha: UpdateSenha){
-    console.log(updateSenha)
+    this.updateSenha.matricula = 52
     this.clienteService.changePassword(updateSenha).subscribe( response=> {
       this.toastr.success(MENSAGENS.SUCESSO);
       this.modalRef.hide();
     },error=>{
       this.toastr.error(MENSAGENS.ERROR);
       this.modalRef.hide();
-      console.log(error.message)
+      console.log(error)
     })
   }
   public openModal(template: TemplateRef<any>) {
@@ -89,7 +90,6 @@ export class ListarClienteComponent implements OnInit {
     this.clienteNew.dataNascimento=null;
     this.clienteNew.nome='';
     this.clienteNew.senha='';
-    this.clienteNew.matricula='';
     this.modalRef = this.modalService.show(template); 
   }
 
@@ -101,7 +101,6 @@ export class ListarClienteComponent implements OnInit {
        this.clientes = response.content;
        this.isUser = true;
        this.pageClientes = response;
-       console.log(response)
        this.loader = false;
     }, error=> {
        this.loader = false;
@@ -156,6 +155,14 @@ export class ListarClienteComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  totalPages() {
+    const pages = [];
+    for( let i = 0; i < this.pageClientes.totalPages; i++) {
+      pages.push(i);
+    }
+    return pages;
   }
 
 }

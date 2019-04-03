@@ -54,7 +54,7 @@
                                 </button>
                             </td>
                             <td>
-                                <button (click)="openModal(updateSenha)" (click)="selecionarClienteUpdateSenha(cliente.matricula)"
+                                <button (click)="openModal(updateSenha)" (click)="selecionarClienteUpdateSenha(cliente)"
                                     type="button" class="btn btn btn-success btn-sm" data-toggle="modal"
                                     data-target="#confirmDialog">
                                     <i class="far fa-trash-alt"></i>
@@ -70,7 +70,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="col-md-12 col-ms-12 ">
-
+                        <div class="text-center">
+                            <i *ngIf="pageClientes.number" (click)="findAll(0)" class="fas fa-angle-double-left"></i>
+                            <i *ngIf="pageClientes.number" (click)="findAll(pageClientes.number -1)"
+                                class="fas fa-angle-left"></i>
+                            <label [ngClass]="pageClientes.number === i? 'atual': ''" class="number"
+                                (click)="findAll(i)" *ngFor="let i of totalPages()">{{i+1}}</label>
+                            <i *ngIf="pageClientes.number < pageClientes.totalPages -1"
+                                (click)="findAll(pageClientes.number +1)" class="fas fa-angle-right"></i>
+                            <i *ngIf="pageClientes.number < pageClientes.totalPages -1"
+                                (click)="findAll(pageClientes.totalPages -1)" class="fas fa-angle-double-right"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,6 +94,8 @@
                 <button class="btn btn-primary btn-adicionar float-right " type="button"
                     (click)="openModal(cadastro)"><i class="fas fa-plus"></i></button>
             </div>
+
+            
         </div>
     </div>
 
@@ -149,7 +161,8 @@
                         <label for="senhaAtual">Senha Atual </label>
                         <input #senhaAtual="ngModel" type="password" name="senhaAtual" id="senhaAtual"
                             [(ngModel)]="updateSenha.senhaAtual"
-                            [class.is-invalid]="!senhaAtual.valid && senhaAtual.touched" required maxlength="50" class="form-control">
+                            [class.is-invalid]="!senhaAtual.valid && senhaAtual.touched" required maxlength="50"
+                            class="form-control">
                     </div>
 
                     <div *ngIf="!senhaAtual.valid && senhaAtual.touched" class="text-danger">
@@ -166,9 +179,6 @@
                     <div *ngIf="!senhaNova.valid && senhaNova.touched" class="text-danger">
                         Informe uma nova senha válido.
                     </div>
-
-
-
 
                     <div>
                         <label for="confirmsenha">Confirme a nova senha</label>
@@ -187,10 +197,9 @@
                     </div>
 
                     <div class="mt-2">
-                        <button
-                            type="submit" [disabled]="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) || senhaForm.invalid"
-                            class="btn btn-success mr-2"><i
-                                class="fas fa-check mr-1"></i>Confirmar</button>
+                        <button type="submit"
+                            [disabled]="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) || senhaForm.invalid"
+                            class="btn btn-success mr-2"><i class="fas fa-check mr-1"></i>Confirmar</button>
                         <button class="btn btn-danger" (click)="modalRef.hide()"><i
                                 class="fas fa-arrow-left mr-1"></i>Cancelar</button>
                     </div>

@@ -1,7 +1,5 @@
-
-
 export interface clienteEntity{
-    matricula: string;
+    matricula: number;
     nome: string;
     dataNascimento: Date;
     email: string;
