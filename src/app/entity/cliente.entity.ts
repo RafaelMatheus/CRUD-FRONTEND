@@ -1,7 +1,5 @@
-
-
 export interface clienteEntity{
-    matricula: string;
+    matricula: number;
     nome: string;
     dataNascimento: Date;
     email: string;
@@ -41,3 +39,4 @@ export interface Sort {
     sorted: boolean;
     unsorted: boolean;
 }
+

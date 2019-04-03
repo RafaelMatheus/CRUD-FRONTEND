@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { clienteEntity, PageCliente } from 'src/app/entity/cliente.entity';
 import { API_CONFIG } from 'src/app/config/apiConfig';
+import { UpdateSenha } from 'src/app/entity/UpdateSenha.dto';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ClienteService{
-    private urlApi: string = API_CONFIG.baseUrlLocal;
+    private urlApi: string = API_CONFIG.baseUrl;
     constructor(private http: HttpClient){}
 
     findAll(page: string = '', linesPerPage: string = '14' , orderBy: string = 'data_cadast' , order: string = 'DESC'): Observable<PageCliente>{
@@ -29,9 +30,11 @@ export class ClienteService{
     }
 
     search(page: string = '', linesPerPage: string = '14' , orderBy: string = 'data_cadast' , order: string = 'DESC', nome: string = ''): Observable<PageCliente>{
-        console.log(nome)
         return this.http.get<PageCliente>(
             `${this.urlApi}/clientes/search?page=${page}&linesPerPage=${linesPerPage}&orderby=${orderBy}&direction=${order}&nome=${nome}`);
     }
 
+    changePassword(updateSenha: UpdateSenha){
+        return this.http.put(`${this.urlApi}/clientes/password`, JSON.stringify(updateSenha));
+    }
 }

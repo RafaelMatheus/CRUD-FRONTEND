@@ -1,4 +1,5 @@
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-md-11">
             <div class="row justify-content-end">
@@ -32,6 +33,7 @@
                             <th>Deletar</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <tr *ngFor="let cliente of clientes">
                             <td>{{cliente.matricula}}</td>
@@ -53,60 +55,83 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="row ">
-                    <div class="col-md-12 col-sm-3 fixed-bottom ">
-                        <button class="btn btn-primary btn-adicionar float-right " type="button"
-                            (click)="openModal(cadastro)"><i class="fas fa-plus"></i></button>
+                <div *ngIf="loader" class="text-center">
+                    <img src="../../../../assets/load.svg">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="col-md-12 col-ms-12 ">
+                        <div class="text-center" *ngIf="isShow">
+                            <i *ngIf="pageClientes.number" (click)="findAll(0)" class="fas fa-angle-double-left"></i>
+                            <i *ngIf="pageClientes.number" (click)="findAll(pageClientes.number -1)"
+                                class="fas fa-angle-left"></i>
+                            <label [ngClass]="pageClientes.number === i? 'atual': ''" class="number"
+                                (click)="findAll(i)" *ngFor="let i of totalPages()">{{i+1}}</label>
+                            <i *ngIf="pageClientes.number < pageClientes.totalPages -1"
+                                (click)="findAll(pageClientes.number +1)" class="fas fa-angle-right"></i>
+                            <i *ngIf="pageClientes.number < pageClientes.totalPages -1"
+                                (click)="findAll(pageClientes.totalPages -1)" class="fas fa-angle-double-right"></i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-<ng-template #cadastro>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Cadastro Cliente</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
+<div>
+    <div class="container-flid">
+        <div class="row">
+            <div class="col-md-12 col-sm-312 fixed-bottom">
+                <button class="btn btn-primary btn-adicionar float-right " type="button"
+                    (click)="openModal(cadastro)"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-        <app-form-cliente btn="Salvar" [cliente]="clienteNew" (outputCliente)="addCliente($event)"
-            (outputModal)="modalRef.hide()"></app-form-cliente>
 
-    </div>
-</ng-template>
 
-<ng-template #edicao>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Atualizar Cliente</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <app-form-cliente btn="Atualizar" (outputCliente)="updateCliente($event)" [cliente]="clienteUpdate"
-            (outputModal)="modalRef.hide()"></app-form-cliente>
 
-    </div>
-</ng-template>
 
-<ng-template #delete>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Deletar Cliente</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <h5>Tem certeza que deseja excluir o cliente {{clienteUpdate.nome + '?'}}</h5>
-        <button class="btn btn-success mr-2" (click)="deleteCliente(clienteUpdate.matricula)"><i
-                class="fas fa-check mr-1"></i>Confirmar</button>
-        <button class="btn btn-danger" (click)="modalRef.hide()"><i class="fas fa-arrow-left mr-1"></i>Cancelar</button>
-    </div>
-</ng-template>
+    <ng-template #cadastro>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Cadastro Cliente</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-form-cliente btn="Salvar" [cliente]="clienteNew" (outputCliente)="addCliente($event)"
+                (outputModal)="modalRef.hide()"></app-form-cliente>
+
+        </div>
+    </ng-template>
+
+    <ng-template #edicao>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Atualizar Cliente</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <app-form-cliente btn="Atualizar" (outputCliente)="updateCliente($event)" [cliente]="clienteUpdate"
+                (outputModal)="modalRef.hide()"></app-form-cliente>
+
+        </div>
+    </ng-template>
+
+    <ng-template #delete>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Deletar Cliente</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h5>Tem certeza que deseja excluir o cliente {{clienteUpdate.nome + '?'}}</h5>
+            <button class="btn btn-success mr-2" (click)="deleteCliente(clienteUpdate.matricula)"><i
+                    class="fas fa-check mr-1"></i>Confirmar</button>
+            <button class="btn btn-danger" (click)="modalRef.hide()"><i
+                    class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+        </div>
+    </ng-template>

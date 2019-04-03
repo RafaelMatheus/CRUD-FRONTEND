@@ -1,25 +1,46 @@
-<form (ngSubmit)="onSubmit();$event.preventDefault()">
+<form #f="ngForm" (ngSubmit)="onSubmit();$event.preventDefault()">
   <div>
     <label for="nome">Nome</label>
-    <input type="text" [(ngModel)]="cliente.nome" id="nome" name="nome" class="form-control">
+    <input type="text" #nome="ngModel" [class.is-invalid]="!nome.valid && nome.touched" required minlength="3"
+      maxlength="100" [(ngModel)]="cliente.nome" id="nome" name="nome" class="form-control">
+  </div>
+  <div *ngIf="!nome.valid && nome.touched" class="text-danger">
+    Informe um nome entre 3 e 6 caracteres.
   </div>
 
   <div>
-      <label for="email">Email</label>
-      <input type="text" [(ngModel)]="cliente.email" id="email" name="email" class="form-control">
+    <label for="email">Email</label>
+    <input type="text" #email="ngModel" [class.is-invalid]="!email.valid && email.touched" required email maxlength="50"
+      [(ngModel)]="cliente.email" id="email" name="email" class="form-control">
+  </div>
+  <div *ngIf="!email.valid && email.touched" class="text-danger">
+    Informe um email válido.
   </div>
 
   <div>
-      <label for="nascimento">Nascimento</label>
-      <input type="date" [(ngModel)]="cliente.dataNascimento" id="nascimento" name="nascimento" class="form-control">
+    <label for="nascimento">Nascimento</label>
+    <input type="date" #data="ngModel" [class.is-invalid]="!data.valid && data.touched" required
+      [(ngModel)]="cliente.dataNascimento" id="nascimento" name="nascimento" class="form-control">
+  </div>
+  <div *ngIf="!data.valid && data.touched" class="text-danger">
+    Informe uma data de nascimento.
   </div>
 
+  <div>
   <div *ngIf="!cliente.matricula">
-      <label for="password">Senha</label>
-      <input type="password" [(ngModel)]="cliente.senha" id="password" name="password" class="form-control">
+    <label for="password">Senha</label>
+    <input #pass="ngModel" [class.is-invalid]="!pass.valid && pass.touched" required minlength="6" maxlength="100"
+      type="password" [(ngModel)]="cliente.senha" id="password" name="password" class="form-control">
+
+    <div *ngIf="!pass.valid && pass.touched" class="text-danger">
+      Informe uma senha com no minimo 6 caracteres.
+    </div>
   </div>
 
-  <button type="submit"  class="mt-2 mr-2 btn btn-success"><i class="mr-1 fas fa-save"></i>{{btn}}</button>
-  <button type="button" (click)="fecharModal()" class="mt-2 btn btn-danger"><i class="mr-1 fas fa-arrow-left"></i>Cancelar</button>
 
+  <button type="submit" [disabled]="f.invalid" class="mt-2 mr-2 btn btn-success"><i
+      class="mr-1 fas fa-save"></i>{{btn}}</button>
+  <button type="button" (click)="fecharModal()" class="mt-2 btn btn-danger"><i
+      class="mr-1 fas fa-arrow-left"></i>Cancelar</button>
+    </div>
 </form>

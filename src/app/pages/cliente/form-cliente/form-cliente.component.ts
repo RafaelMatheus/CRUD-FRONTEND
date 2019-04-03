@@ -19,12 +19,11 @@ export class FormClienteComponent implements OnInit {
   }
 
   fecharModal(){
-    this.outputModal.emit('aaa');
+    this.outputModal.emit('');
   }
 
   onSubmit() {
     this.outputCliente.emit(this.cliente);
-    console.log(this.cliente)
   }
 
 }

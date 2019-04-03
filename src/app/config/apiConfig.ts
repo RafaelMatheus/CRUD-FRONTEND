@@ -1,4 +1,4 @@
 export const API_CONFIG = {
-    baseUrl: 'https://crud-clientes.herokuapp.com',
+    baseUrl: 'https://clienteback.herokuapp.com',
     baseUrlLocal: 'http://localhost:8080'
 }

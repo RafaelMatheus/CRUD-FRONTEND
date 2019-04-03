@@ -81,4 +81,9 @@ th:hover{
     position: relative;
     display: inline;
  }
-  
+ 
+ .container-fluid{
+    margin-bottom: 6%;
+    margin-top: 2%;
+ }
+
