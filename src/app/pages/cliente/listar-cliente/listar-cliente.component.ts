@@ -21,10 +21,12 @@ export class ListarClienteComponent implements OnInit {
   public modalRef: BsModalRef;
   public order: string;
   public value: any;
-  clienteNew: clienteEntity = <clienteEntity>{};
-  clienteUpdate: clienteEntity = <clienteEntity>{};
+  public clienteNew: clienteEntity = <clienteEntity>{};
+  public clienteUpdate: clienteEntity = <clienteEntity>{};
   public pageClientes: PageCliente = <any>{};
   public updateSenha: UpdateSenha = <UpdateSenha>{};
+  public matriculaClienteUpdate: number;
+
   constructor(private clienteService: ClienteService, 
     private modalService: BsModalService, 
     private toastr: ToastrService) { }
@@ -37,9 +39,10 @@ export class ListarClienteComponent implements OnInit {
   selecionaCliente(cliente: clienteEntity){
     this.clienteUpdate = cliente;
   }
+
   selecionarClienteUpdateSenha(matricula: clienteEntity){
-    console.log(matricula)
-    this.updateSenha.matricula = matricula.matricula;
+  
+    this.matriculaClienteUpdate = matricula.matricula;
   }
 
   zeraCliente(){
@@ -51,11 +54,13 @@ export class ListarClienteComponent implements OnInit {
       this.findAll();
       this.toastr.success(MENSAGENS.SUCESSO);
       this.modalRef.hide();
+      this.clienteNew = <clienteEntity>{};
     }, error=>{
       this.loader = false;
       this.error = true;
-      this.toastr.error(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR+' Email existente');
       this.modalRef.hide();
+      this.clienteNew = <clienteEntity>{};
     })
    
   }
@@ -68,7 +73,7 @@ export class ListarClienteComponent implements OnInit {
     }, error=>{
       this.loader = false;
       this.error = true;
-      this.toastr.error(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR + error.message);
       this.modalRef.hide();
     })
     
@@ -80,16 +85,12 @@ export class ListarClienteComponent implements OnInit {
       this.toastr.success(MENSAGENS.SUCESSO);
       this.modalRef.hide();
     },error=>{
-      this.toastr.error(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR + error.message);
       this.modalRef.hide();
       console.log(error)
     })
   }
   public openModal(template: TemplateRef<any>) {
-    this.clienteNew.email='';
-    this.clienteNew.dataNascimento=null;
-    this.clienteNew.nome='';
-    this.clienteNew.senha='';
     this.modalRef = this.modalService.show(template); 
   }
 
@@ -126,7 +127,7 @@ export class ListarClienteComponent implements OnInit {
     },error=>{
       this.loader = false;
       this.error = true;
-      this.toastr.error(MENSAGENS.ERROR);
+      this.toastr.error(MENSAGENS.ERROR + error.message);
       this.modalRef.hide();
     })
   }

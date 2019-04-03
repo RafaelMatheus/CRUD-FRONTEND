@@ -31,7 +31,6 @@
                             <th (click)="trocarOrdem('dataNascimento')">Nasc.</th>
                             <th>Editar</th>
                             <th>Deletar</th>
-                            <th>Senha</th>
                         </tr>
                     </thead>
 
@@ -50,13 +49,6 @@
                             <td>
                                 <button (click)="openModal(delete)" (click)="selecionaCliente(cliente)" type="button"
                                     class="btn btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDialog">
-                                    <i class="far fa-trash-alt"></i>
-                                </button>
-                            </td>
-                            <td>
-                                <button (click)="openModal(updateSenha)" (click)="selecionarClienteUpdateSenha(cliente)"
-                                    type="button" class="btn btn btn-success btn-sm" data-toggle="modal"
-                                    data-target="#confirmDialog">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </td>
@@ -94,8 +86,6 @@
                 <button class="btn btn-primary btn-adicionar float-right " type="button"
                     (click)="openModal(cadastro)"><i class="fas fa-plus"></i></button>
             </div>
-
-            
         </div>
     </div>
 
@@ -143,69 +133,5 @@
                     class="fas fa-check mr-1"></i>Confirmar</button>
             <button class="btn btn-danger" (click)="modalRef.hide()"><i
                     class="fas fa-arrow-left mr-1"></i>Cancelar</button>
-        </div>
-    </ng-template>
-
-    <ng-template #updateSenha>
-        <div class="modal-header">
-            <h4 class="modal-title pull-left">Atualizar senha</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-
-        <div class="modal-body">
-            <form #senhaForm="ngForm" (ngSubmit)="changePassword(updateSenha);$event.preventDefault()">
-                <div>
-                    <div>
-                        <label for="senhaAtual">Senha Atual </label>
-                        <input #senhaAtual="ngModel" type="password" name="senhaAtual" id="senhaAtual"
-                            [(ngModel)]="updateSenha.senhaAtual"
-                            [class.is-invalid]="!senhaAtual.valid && senhaAtual.touched" required maxlength="50"
-                            class="form-control">
-                    </div>
-
-                    <div *ngIf="!senhaAtual.valid && senhaAtual.touched" class="text-danger">
-                        Informe uma senha válido.
-                    </div>
-
-                    <div>
-                        <label for="senhaNova">Nova senha </label>
-                        <input name="senhaNova" id="senhaNova" [(ngModel)]="updateSenha.senhaNova" #senhaNova="ngModel"
-                            [class.is-invalid]="!senhaNova.valid && senhaNova.touched" required minlength="6"
-                            maxlength="50" type="password" class="form-control">
-                    </div>
-
-                    <div *ngIf="!senhaNova.valid && senhaNova.touched" class="text-danger">
-                        Informe uma nova senha válido.
-                    </div>
-
-                    <div>
-                        <label for="confirmsenha">Confirme a nova senha</label>
-                        <input #confirmsenha="ngModel" type="password" name="confirmsenha" id="confirmsenha"
-                            [(ngModel)]="updateSenha.confirmsenha"
-                            [class.is-invalid]="!confirmsenha.valid && confirmsenha.touched" required maxlength="50"
-                            class="form-control">
-                    </div>
-                    <div *ngIf="!confirmsenha.valid && confirmsenha.touched" class="text-danger">
-                        Preenchimento obrigatório.
-                    </div>
-
-                    <div *ngIf="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) && confirmsenha.touched"
-                        class="text-danger">
-                        Senhas não conferem.
-                    </div>
-
-                    <div class="mt-2">
-                        <button type="submit"
-                            [disabled]="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) || senhaForm.invalid"
-                            class="btn btn-success mr-2"><i class="fas fa-check mr-1"></i>Confirmar</button>
-                        <button class="btn btn-danger" (click)="modalRef.hide()"><i
-                                class="fas fa-arrow-left mr-1"></i>Cancelar</button>
-                    </div>
-                </div>
-
-            </form>
-
         </div>
     </ng-template>
