@@ -17,6 +17,7 @@ export class ListarClienteComponent implements OnInit {
   private loader: boolean = false;
   private error: boolean  = true;
   public isUser: boolean = false;
+  public isShow: boolean = true;
   public clientes: clienteEntity[];
   public modalRef: BsModalRef;
   public order: string;
@@ -97,6 +98,7 @@ export class ListarClienteComponent implements OnInit {
   findAll(page: string = '0',  linesporPage: string = '10', orderBy: string = 'data_cadast', order: string = "DESC"){
     this.loader = true;
     this.order = order;
+    this.isShow = true;
     this.clienteService.findAll(page, linesporPage, orderBy, order ).subscribe(
       (response: PageCliente) => {
        this.clientes = response.content;
@@ -138,6 +140,7 @@ export class ListarClienteComponent implements OnInit {
 
   onKey(event: any, page: string = '0',  linesporPage: string = '9', orderBy: string = 'data_cadast', order='DESC') { // without type info
     this.value = event.target.value;
+    this.isShow = false;
     if(this.value == null){
       this.findAll();
     }

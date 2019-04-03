@@ -9,7 +9,7 @@ import { UpdateSenha } from 'src/app/entity/UpdateSenha.dto';
     providedIn: 'root'
 })
 export class ClienteService{
-    private urlApi: string = API_CONFIG.baseUrlLocal;
+    private urlApi: string = API_CONFIG.baseUrl;
     constructor(private http: HttpClient){}
 
     findAll(page: string = '', linesPerPage: string = '14' , orderBy: string = 'data_cadast' , order: string = 'DESC'): Observable<PageCliente>{
