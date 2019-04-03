@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { PageCliente, clienteEntity } from 'src/app/entity/cliente.entity';
+import { PageCliente, clienteEntity, UpdateSenha } from 'src/app/entity/cliente.entity';
 import { ClienteService } from 'src/app/service/domain/cliente.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -13,17 +13,17 @@ import { MENSAGENS } from 'src/app/config/message';
   styleUrls: ['./listar-cliente.component.css']
 })
 export class ListarClienteComponent implements OnInit {
-  public loader: boolean = false;
-  public error: boolean  = true;
+  private loader: boolean = false;
+  private error: boolean  = true;
   public isUser: boolean = false;
-  private clientes: clienteEntity[];
+  public clientes: clienteEntity[];
   public modalRef: BsModalRef;
   public order: string;
   public value: any;
   clienteNew: clienteEntity = <clienteEntity>{};
   clienteUpdate: clienteEntity = <clienteEntity>{};
-  pageNumber = 20;
-  public pageClientes: PageCliente;
+  public pageClientes: PageCliente = <any>{};
+  public updateSenha: UpdateSenha = <UpdateSenha>{};
   constructor(private clienteService: ClienteService, 
     private modalService: BsModalService, 
     private toastr: ToastrService) { }
@@ -31,6 +31,7 @@ export class ListarClienteComponent implements OnInit {
 
   ngOnInit() {
     this.findAll();
+    console.log(this.pageClientes);
   }
 
   selecionaCliente(cliente: clienteEntity){
@@ -86,6 +87,8 @@ export class ListarClienteComponent implements OnInit {
        this.clientes = response.content;
        this.isUser = true;
        this.pageClientes = response;
+       console.log(response)
+       this.loader = false;
     }, error=> {
        this.loader = false;
        this.error = true;
@@ -116,7 +119,6 @@ export class ListarClienteComponent implements OnInit {
   }
 
   isUserAdd(): boolean{
-    console.log(this.isUser);
     return this.isUser;
   }
 
@@ -133,9 +135,13 @@ export class ListarClienteComponent implements OnInit {
     })
   }
   pageChanged(event: any){
-    this. pageNumber = this.pageClientes.pageable.pageNumber;
-    console.log(this.pageClientes.number);
-    console.log(this.pageClientes.pageable.pageNumber);
     this.findAll(event.page);
   }
+  isPasswordEquals(novaSenha: string, confirmacaoSenha: string): boolean{
+    if(novaSenha === confirmacaoSenha){
+      return false;
+    }
+    return true;
+  }
+
 }

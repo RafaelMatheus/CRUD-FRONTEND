@@ -1,4 +1,5 @@
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-md-11">
             <div class="row justify-content-end">
@@ -30,8 +31,10 @@
                             <th (click)="trocarOrdem('dataNascimento')">Nasc.</th>
                             <th>Editar</th>
                             <th>Deletar</th>
+                            <th>Senha</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         <tr *ngFor="let cliente of clientes">
                             <td>{{cliente.matricula}}</td>
@@ -50,15 +53,24 @@
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </td>
+                            <td>
+                                <button (click)="openModal(updateSenha)" (click)="selecionaCliente(cliente)"
+                                    type="button" class="btn btn btn-success btn-sm" data-toggle="modal"
+                                    data-target="#confirmDialog">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+                <div *ngIf="loader" class="text-center">
+                    <img src="../../../../assets/load.svg">
+                </div>
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="col-md-12 col-ms-12 ">
-                        <pagination class="justify-content-center" [totalItems]="20" [(ngModel)]="currentPage"
-                            (pageChanged)="pageChanged($event)"></pagination>
+
                     </div>
                 </div>
             </div>
@@ -119,5 +131,70 @@
                     class="fas fa-check mr-1"></i>Confirmar</button>
             <button class="btn btn-danger" (click)="modalRef.hide()"><i
                     class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+        </div>
+    </ng-template>
+
+    <ng-template #updateSenha>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Atualizar senha</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form #senhaForm="ngForm" (ngSubmit)="onSubmit();$event.preventDefault()">
+                <div>
+                    <div>
+                        <label for="senhaAtual">Senha Atual </label>
+                        <input #senhaAtual="ngModel" type="password" name="senhaAtual" id="senhaAtual"
+                            [(ngModel)]="updateSenha.senhaAtual"
+                            [class.is-invalid]="!senhaAtual.valid && senhaAtual.touched" required class="form-control">
+                    </div>
+
+                    <div *ngIf="!senhaAtual.valid && senhaAtual.touched" class="text-danger">
+                        Informe uma senha válido.
+                    </div>
+
+                    <div>
+                        <label for="senhaNova">Nova senha </label>
+                        <input name="senhaNova" id="senhaNova" [(ngModel)]="updateSenha.senhaNova" #senhaNova="ngModel"
+                            [class.is-invalid]="!senhaNova.valid && senhaNova.touched" required type="password"
+                            class="form-control">
+                    </div>
+
+                    <div *ngIf="!senhaNova.valid && senhaNova.touched" class="text-danger">
+                        Informe uma nova senha válido.
+                    </div>
+
+
+
+
+                    <div>
+                        <label for="confirmsenha">Confirme a nova senha</label>
+                        <input #confirmsenha="ngModel" type="password" name="confirmsenha" id="confirmsenha"
+                            [(ngModel)]="updateSenha.confirmsenha"
+                            [class.is-invalid]="!confirmsenha.valid && confirmsenha.touched" required
+                            class="form-control">
+                    </div>
+                    <div *ngIf="!confirmsenha.valid && confirmsenha.touched" class="text-danger">
+                        Preenchimento obrigatório.
+                    </div>
+
+                    <div *ngIf="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) && confirmsenha.touched"
+                        class="text-danger">
+                        Senhas não conferem.
+                    </div>
+
+                    <div class="mt-2">
+                        <button [disabled]="isPasswordEquals(updateSenha.senhaNova, updateSenha.confirmsenha) || senhaForm.invalid" class="btn btn-success mr-2" (click)="deleteCliente(clienteUpdate.matricula)"><i
+                                class="fas fa-check mr-1"></i>Confirmar</button>
+                        <button class="btn btn-danger" (click)="modalRef.hide()"><i
+                                class="fas fa-arrow-left mr-1"></i>Cancelar</button>
+                    </div>
+                </div>
+
+            </form>
+
         </div>
     </ng-template>
